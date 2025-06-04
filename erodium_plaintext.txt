@@ -1,0 +1,33 @@
+Key to Erodium
+
+View taxon page for Erodium
+
+(For a list of species in Erodium, use the above link.)
+
+Jepson Manual glossary definitions can be seen by moving your cursor over words underlined with dots.
+
+
+    1. Basal, lower cauline leaves pinnately compound, leaflets lobed to deeply dissected
+
+    2. Pits at top of mericarp without glands ..... E. cicutarium
+
+    2' Pits at top of mericarp with glands ..... E. moschatum
+
+    1' Basal, lower cauline leaves crenate to pinnately lobed to dissected, lobes or segments lobed to dissected, especially basal pair
+
+    3. Pits at top of mericarp with glands ..... E. malacoides
+
+    3' Pits at top of mericarp 0 or without glands
+
+    4. Sepals with glands, spreading hairs
+
+    5. Mericarp top with pits 0 or transversely narrow and inconspicuous, subtended by (2)3–4 glabrous ridges ..... E. botrys
+
+    5' Mericarp top with pits ± round, subtended by 1–2 ± hairy ridges ..... E. brachycarpum
+
+    4' Sepal without glands, with appressed hairs
+
+    6. Sepal hairs directed basally; petals < 0.8 cm ..... [E. cygnorum]
+
+    6' Sepal hairs directed apically; petals generally 0.7–1.5 cm ..... E. texanum
+
