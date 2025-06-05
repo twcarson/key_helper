@@ -19,8 +19,9 @@ def plaintext_file_to_key(key_file):
         if len(parts) == 1: # non-terminal
             node=k.NonTerminalNode(index,rest,None,None,None)
         elif len(parts) == 2: # terminal node, taxon follows "....."
-            leaf=k.Leaf(parts[1],'')
-            node=k.TerminalNode(index,parts[0],None,leaf)
+            node=k.TerminalNode(index,parts[0],None,None)
+            leaf=k.Leaf(parts[1],'',node)
+            node.attach_leaf(leaf)
         position = 1 if index.endswith("'") else 0 
         node.set_parent(index_stack[-1])
         index_stack[-1].attach_child(node,position)

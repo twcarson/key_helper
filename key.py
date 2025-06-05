@@ -48,7 +48,6 @@ class NonTerminalNode(Node):
         # assumes the key is complete and valid
         return {**{self.index : self}, **self.lchild.indices(), **self.rchild.indices()}
     
-    
 class TerminalNode(Node):
     def __init__(self,index,description='',parent=None,leaf=None):
         super().__init__(index,description,parent)
@@ -64,9 +63,10 @@ class TerminalNode(Node):
         return {self.index : self}
     
 class Leaf:
-    def __init__(self,title,data):
-        self.title=title
-        self.data=data
+    def __init__(self,title,data,node=None):
+        self.title = title
+        self.data = data
+        self.node = node
     
 class Key:
     def __init__(self,title,subtitle,root_node=None):
@@ -76,10 +76,14 @@ class Key:
         self.indices = []
         self.root = root_node
         
+    def dump_to_json(self):
+        # TODO
+        return
     def insert_node(self,node,parent):
-        # TODO: type validation
+        # TODO
         return
     def replace_node(self,old_node,new_node):
+        # TODO
         return
 
     def remove_branch(self,node):
@@ -94,7 +98,6 @@ class Key:
         rootstock = parent.parent
         # find which child of parent we're keeping  
         scion = lchild if rchild is node else rchild
-        print("scion:",scion.index)
         scion.parent = rootstock
         try:
             # graft scion (child) onto rootstock (grandparent) 
@@ -110,7 +113,11 @@ class Key:
         self.grow_indices()
         return
 
-            
+    def prune_tree(self,f):
+        prunable_branches = [l.node for l in list(filter(f,self.leaves))]
+        for b in prunable_branches:
+            self.remove_branch(b)
+    
     def grow_leaves(self):    
         try:
             self.leaves = self.root.leaves()
@@ -172,3 +179,5 @@ class Key:
                 return previous
             previous = node
         return previous # if this return is used, node_a == node_b 
+
+    
