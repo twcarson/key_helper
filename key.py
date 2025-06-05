@@ -69,7 +69,9 @@ class Leaf:
         self.data=data
     
 class Key:
-    def __init__(self,root_node=None):
+    def __init__(self,title,subtitle,root_node=None):
+        self.title = title
+        self.subtitle = subtitle
         self.leaves = []
         self.indices = []
         self.root = root_node
@@ -79,15 +81,58 @@ class Key:
         return
     def replace_node(self,old_node,new_node):
         return
+
+    def remove_branch(self,node):
+        parent = node.parent
+        # if parent is None, we're removing the tree from the root.
+        if parent is None:
+            self.root = None
+            self.grow_leaves()
+            self.grow_indices()
+            return
+        lchild,rchild = parent.lchild, parent.rchild
+        rootstock = parent.parent
+        # find which child of parent we're keeping  
+        scion = lchild if rchild is node else rchild
+        print("scion:",scion.index)
+        scion.parent = rootstock
+        try:
+            # graft scion (child) onto rootstock (grandparent) 
+            if rootstock.lchild is parent:
+                rootstock.lchild = scion    
+            else:
+                rootstock.rchild = scion
+        except AttributeError:
+            # if rootstock is NoneType: set the root of the key to scion
+            self.root = scion
+        # fix the indices of leaves and nodes
+        self.grow_leaves()
+        self.grow_indices()
+        return
+
+            
     def grow_leaves(self):    
-        self.leaves = self.root.leaves()
+        try:
+            self.leaves = self.root.leaves()
+        except AttributeError:
+            # if root node is NoneType, set leaves to empty list
+            self.leaves = []
         return
     def grow_indices(self):    
-        self.indices = self.root.indices()
+        try:
+            self.indices = self.root.indices()
+        except AttributeError:
+            # if root node is NoneType, set indices to empty list
+            self.indices = []
         return
         
     def print_key(self):
-        self.print_branch(self.root,0)
+        print("============\n{}\n============".format(self.title))
+        try:
+            self.print_branch(self.root,0)
+        except AttributeError:
+            # if root is NoneType
+            print("Nothing interesting happens.")
         return
     def print_branch(self,node,depth=0):
         # assumes the branch is complete and valid

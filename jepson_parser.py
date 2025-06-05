@@ -10,8 +10,8 @@ def plaintext_file_to_key(key_file):
     lines = [l for l in list(filter(lambda x : x[0].isdigit(), lines))]
 
     # as far as I can tell, all jepson key pages have at least two taxa
-    root = k.NonTerminalNode('0.',genus,None,None,None)    
-    key = k.Key(root)
+    root = k.NonTerminalNode('0.','',None,None,None)    
+    key = k.Key(genus,'',root)
     index_stack = [root]
     for l in lines:
         index,rest = l.split(' ', 1)
