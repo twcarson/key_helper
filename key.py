@@ -44,6 +44,9 @@ class NonTerminalNode(Node):
     def leaves(self):
         # assumes the key is complete and valid
         return self.lchild.leaves() + self.rchild.leaves()
+    def indices(self):
+        # assumes the key is complete and valid
+        return {**{self.index : self}, **self.lchild.indices(), **self.rchild.indices()}
     
     
 class TerminalNode(Node):
@@ -57,6 +60,8 @@ class TerminalNode(Node):
         return 1
     def leaves(self):
         return [self.leaf]
+    def indices(self):
+        return {self.index : self}
     
 class Leaf:
     def __init__(self,title,data):
@@ -66,6 +71,7 @@ class Leaf:
 class Key:
     def __init__(self,root_node=None):
         self.leaves = []
+        self.indices = []
         self.root = root_node
         
     def insert_node(self,node,parent):
@@ -76,6 +82,10 @@ class Key:
     def grow_leaves(self):    
         self.leaves = self.root.leaves()
         return
+    def grow_indices(self):    
+        self.indices = self.root.indices()
+        return
+        
     def print_key(self):
         self.print_branch(self.root,0)
         return
@@ -87,4 +97,17 @@ class Key:
             self.print_branch(node.rchild,depth+1)
         except AttributeError:
             print('  ', '-'*2*depth, node.leaf.title)
+    def print_node(self,node):
+        print(node.index,'   ',node.description)
+        try:
+            print(node.leaf.title,'   ',node.leaf.data)
+        except AttributeError:
+            pass
+    def print_index(self,index):
+        node=self.indices[index]
+        try:
+            print(index,'   ',node.description)
+            print('..... ',node.leaf.title,'   ',node.leaf.data)
+        except AttributeError:
+            pass
             

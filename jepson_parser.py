@@ -1,4 +1,4 @@
-import json
+import key as k
 
 def plaintext_file_to_key(key_file):
     with open(key_file,'r') as inf:
@@ -10,17 +10,17 @@ def plaintext_file_to_key(key_file):
     lines = [l for l in list(filter(lambda x : x[0].isdigit(), lines))]
 
     # as far as I can tell, all jepson key pages have at least two taxa
-    root = NonTerminalNode('0.',genus,None,None,None)    
-    key = Key(root)
+    root = k.NonTerminalNode('0.',genus,None,None,None)    
+    key = k.Key(root)
     index_stack = [root]
     for l in lines:
         index,rest = l.split(' ', 1)
         parts = rest.split(' ..... ')
         if len(parts) == 1: # non-terminal
-            node=NonTerminalNode(index,rest,None,None,None)
+            node=k.NonTerminalNode(index,rest,None,None,None)
         elif len(parts) == 2: # terminal node, taxon follows "....."
-            leaf=Leaf(parts[1],'')
-            node=TerminalNode(index,parts[0],None,leaf)
+            leaf=k.Leaf(parts[1],'')
+            node=k.TerminalNode(index,parts[0],None,leaf)
         position = 1 if index.endswith("'") else 0 
         node.set_parent(index_stack[-1])
         index_stack[-1].attach_child(node,position)
@@ -29,5 +29,6 @@ def plaintext_file_to_key(key_file):
         if len(parts) == 1:
             index_stack.append(node)
     key.grow_leaves()
+    key.grow_indices()
     return key
 
