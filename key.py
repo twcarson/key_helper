@@ -110,4 +110,20 @@ class Key:
             print('..... ',node.leaf.title,'   ',node.leaf.data)
         except AttributeError:
             pass
-            
+
+    def path_to_root(self,node):
+        if node==self.root:
+            return [node]
+        return [node] + self.path_to_root(node.parent)
+    
+    def nearest_common_ancestor(self,node_a,node_b):
+        path_a = self.path_to_root(node_a)
+        path_a.reverse()
+        path_b = self.path_to_root(node_b)
+        path_b.reverse()
+        previous = None
+        for i, node in enumerate(path_a):
+            if path_a[i] != path_b[i]:
+                return previous
+            previous = node
+        return previous # if this return is used, node_a == node_b 
